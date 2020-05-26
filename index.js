@@ -40,12 +40,35 @@ document.addEventListener('DOMContentLoaded', () => {
     [1, width, width + 1, width * 2 + 1],
   ];
 
-  let curPosition = 4;
-  paintTetrominos(curPosition, ttetrominos, squares)
+  const allTetrominos = [
+    ltetrominos, ztetrominos, otetrominos, itetrominos, ttetrominos
+  ];
+
+  let currentColumn = 4;
+
+  function draw(tetromino, column) {
+    tetromino.forEach(index => {
+      squares[column + index].classList.add('tetromino');
+    });
+  }
+
+  function undraw(tetromino, column) {
+    tetromino.forEach(index => {
+      squares[column + index].classList.remove('tetromino');
+    });
+  }
+
+  function moveDown() {
+    let randomRotation = Math.floor(Math.random() * 4);
+    let randomTetrominoShape = Math.floor(Math.random() * allTetrominos.length);
+    let currentTetromino = allTetrominos[randomTetrominoShape][randomRotation];
+
+    draw(currentTetromino, currentColumn);
+    setTimeout(() => {
+      undraw(currentTetromino, currentColumn);
+    }, 500);
+  }
+
+  moveDown();
 });
 
-function paintTetrominos(curPosition, tetromino, squares) {
-  tetromino[0].forEach(element => {
-    squares[curPosition + element].classList.add('tetromino');
-  });
-}

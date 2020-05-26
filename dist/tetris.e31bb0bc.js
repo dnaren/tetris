@@ -129,15 +129,33 @@ document.addEventListener('DOMContentLoaded', function () {
   var otetrominos = [[0, 1, width, width + 1], [0, 1, width, width + 1], [0, 1, width, width + 1], [0, 1, width, width + 1]];
   var itetrominos = [[0, width, width * 2, width * 3], [0, 1, 2, 3], [0, width, width * 2, width * 3], [0, 1, 2, 3]];
   var ttetrominos = [[1, width, width + 1, width + 2], [1, width + 1, width + 2, width * 2 + 1], [0, 1, 2, width + 1], [1, width, width + 1, width * 2 + 1]];
-  var curPosition = 4;
-  paintTetrominos(curPosition, ttetrominos, squares);
-});
+  var allTetrominos = [ltetrominos, ztetrominos, otetrominos, itetrominos, ttetrominos];
+  var currentColumn = 4;
 
-function paintTetrominos(curPosition, tetromino, squares) {
-  tetromino[0].forEach(function (element) {
-    squares[curPosition + element].classList.add('tetromino');
-  });
-}
+  function draw(tetromino, column) {
+    tetromino.forEach(function (index) {
+      squares[column + index].classList.add('tetromino');
+    });
+  }
+
+  function undraw(tetromino, column) {
+    tetromino.forEach(function (index) {
+      squares[column + index].classList.remove('tetromino');
+    });
+  }
+
+  function moveDown() {
+    var randomRotation = Math.floor(Math.random() * 4);
+    var randomTetrominoShape = Math.floor(Math.random() * allTetrominos.length);
+    var currentTetromino = allTetrominos[randomTetrominoShape][randomRotation];
+    draw(currentTetromino, currentColumn);
+    setTimeout(function () {
+      undraw(currentTetromino, currentColumn);
+    }, 500);
+  }
+
+  moveDown();
+});
 },{}],"../../Users/Narendiran.Dorairaj/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
